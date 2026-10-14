@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UNITRAMP для инвесторов</title>
+<meta name="description" content="Семейный парк как бизнес: под ключ за 10–20 млн ₽. Подбор формата под город, проектирование, своё производство и запуск.">
+<meta name="theme-color" content="#145AF5">
+<link rel="icon" href="assets/img/logo.svg">
+<style>
+@font-face{font-family:"Manrope";src:url(assets/fonts/Manrope-700.ttf) format("truetype");font-weight:700;font-display:swap}
+@font-face{font-family:"Manrope";src:url(assets/fonts/Manrope-800.ttf) format("truetype");font-weight:800;font-display:swap}
+@font-face{font-family:"Golos";src:url(assets/fonts/GolosText-400.ttf) format("truetype");font-weight:400;font-display:swap}
+@font-face{font-family:"Golos";src:url(assets/fonts/GolosText-500.ttf) format("truetype");font-weight:500;font-display:swap}
+@font-face{font-family:"Golos";src:url(assets/fonts/GolosText-600.ttf) format("truetype");font-weight:600;font-display:swap}
+
+:root{
+  --bg:#FFFFFF; --soft:#F3F6FB; --soft-2:#E8EEF7;
+  --ink:#14243A; --ink-2:#52637A; --ink-3:#8796AB; --line:rgba(20,36,58,.12);
+  --blue:#145AF5; --blue-2:#0F47C4; --blue-soft:#E3ECFE; --yellow:#FFD23F; --yellow-2:#F5C518;
+  --navy:#0E1B33; --navy-2:#182A4A; --on-navy:#E8EEF8; --on-navy-2:#9DAAC2; --line-navy:rgba(232,238,248,.14);
+  --green:#1E9E55;
+  --gap:#B7791F; --gap-bg:#FFF4D6;
+  --ease:cubic-bezier(.2,.7,.2,1); --ease-out:cubic-bezier(.16,1,.3,1);
+  --pad:64px; --max:1280px; --sec:112px; --r:24px; --r-m:16px; --r-s:10px;
+  --h:"Manrope",system-ui,sans-serif; --b:"Golos",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--bg);color:var(--ink);font:400 18px/1.55 var(--b);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+.wrap{max-width:calc(var(--max) + var(--pad)*2);margin:0 auto;padding:0 var(--pad)}
+.sec{padding:var(--sec) 0}
+h1,h2,h3{font-family:var(--h);font-weight:800;letter-spacing:-.035em;line-height:1.05}
+h2{font-size:clamp(34px,4.4vw,56px)}
+h3{font-size:22px;letter-spacing:-.02em;line-height:1.2;font-weight:800}
+.chip{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px;border-radius:999px;background:var(--blue-soft);color:var(--blue);font:600 14px/1 var(--b)}
+.chip.y{background:var(--yellow);color:var(--ink)}
+.chip.w{background:rgba(255,255,255,.16);color:#fff}
+.lead{font-size:20px;line-height:1.5;color:var(--ink-2);max-width:36em}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:56px;flex-wrap:wrap}
+.head .l{max-width:720px}
+.head h2{margin-top:18px}
+.head .lead{max-width:30em}
+.small{font-size:14px;color:var(--ink-3);line-height:1.45}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:58px;padding:0 28px;border-radius:999px;border:0;cursor:pointer;font:600 17px/1 var(--b);white-space:nowrap;transition:transform .2s var(--ease),background .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.98)}
+.btn-b{background:var(--blue);color:#fff;box-shadow:0 10px 24px -12px rgba(20,90,245,.8)}.btn-b:hover{background:var(--blue-2)}
+.btn-y{background:var(--yellow);color:var(--ink);box-shadow:0 10px 24px -12px rgba(245,197,24,.9)}.btn-y:hover{background:var(--yellow-2)}
+.btn-g{background:transparent;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor}
+.btn .arr{width:18px;height:18px;transition:transform .25s var(--ease)}.btn:hover .arr{transform:translateX(4px)}
+
+/* gaps */
+.gap{display:inline;background:var(--gap-bg);color:#7A4E0E;border:1px dashed var(--gap);border-radius:5px;padding:1px 6px;font:500 .78em/1.45 var(--b);box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.gap::before{content:"нужны данные · ";font-weight:600}
+.gap.ok::before{content:"подтвердить · "}
+.dark .gap{background:rgba(255,212,120,.12);color:#FFD88A;border-color:rgba(255,212,120,.5)}
+body.clean .gap{display:none}
+.gaps-toggle{position:fixed;left:16px;bottom:16px;z-index:60;display:flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:999px;background:var(--gap-bg);color:#7A4E0E;border:1px dashed var(--gap);font:600 13px/1 var(--b);cursor:pointer;box-shadow:0 6px 20px -8px rgba(0,0,0,.3);transition:opacity .3s,transform .3s}
+.gaps-toggle b{display:inline-grid;place-items:center;min-width:22px;height:22px;border-radius:11px;background:var(--gap);color:#fff;font-size:12px;padding:0 6px}
+body.clean .gaps-toggle{background:#fff;color:var(--ink-2);border:1px solid var(--line)}
+body.at-top .gaps-toggle{opacity:0;transform:translateY(12px);pointer-events:none}
+
+/* header */
+.progress{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--yellow);z-index:80}
+.hdr{position:sticky;top:0;z-index:70;background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);transition:box-shadow .3s}
+.hdr.sh{box-shadow:0 1px 0 var(--line)}
+.hdr .wrap{display:flex;align-items:center;gap:36px;height:76px}
+.hdr .logo img{width:140px}
+.hdr nav{display:flex;gap:26px;margin-left:auto;font:500 15px/1 var(--b);color:var(--ink-2)}
+.hdr nav a{padding:8px 0;transition:color .2s}.hdr nav a:hover{color:var(--blue)}
+.hdr .btn{height:46px;padding:0 20px;font-size:15px}
+.burger{display:none;margin-left:auto;width:44px;height:44px;border:0;background:none;cursor:pointer;position:relative}
+.burger span{position:absolute;left:11px;right:11px;height:2px;background:var(--ink);transition:transform .3s var(--ease)}
+.burger span:nth-child(1){top:16px}.burger span:nth-child(2){top:26px}
+body.menu-open .burger span:nth-child(1){transform:translateY(5px) rotate(45deg)}
+body.menu-open .burger span:nth-child(2){transform:translateY(-5px) rotate(-45deg)}
+.mmenu{position:fixed;left:0;right:0;top:64px;bottom:0;z-index:65;background:#fff;padding:24px 16px 32px;display:flex;flex-direction:column;gap:4px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s,transform .4s var(--ease-out),visibility .3s}
+body.menu-open .mmenu{opacity:1;visibility:visible;transform:none}
+.mmenu a:not(.btn){font:800 28px/1.3 var(--h);letter-spacing:-.03em;padding:10px 0;border-bottom:1px solid var(--line)}
+.mmenu .btn{margin-top:auto}
+
+/* hero */
+.hero{padding:16px 16px 0}
+.hero-box{max-width:1440px;margin:0 auto;background:var(--blue);border-radius:32px;color:#fff;position:relative;overflow:hidden}
+.hero-box::before{content:"";position:absolute;width:760px;height:760px;border-radius:50%;left:-260px;bottom:-420px;background:radial-gradient(circle,rgba(255,255,255,.14),rgba(255,255,255,0) 65%)}
+.hero-in{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;padding:72px var(--pad) 64px;position:relative;max-width:calc(var(--max) + var(--pad)*2);margin:0 auto}
+.hero h1{font-size:clamp(44px,5.6vw,80px);line-height:.98;letter-spacing:-.045em;margin:24px 0 24px}
+.hero h1 em{font-style:normal;color:var(--yellow)}
+.hero p.sub{font-size:20px;line-height:1.5;color:rgba(255,255,255,.88);max-width:30em}
+.hero .ctas{display:flex;gap:12px;margin-top:36px;flex-wrap:wrap}
+.hero .btn-g{color:#fff}
+.hero-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:48px}
+.hero-facts div{background:rgba(255,255,255,.1);border-radius:var(--r-m);padding:16px 18px}
+.hero-facts b{display:block;font:800 30px/1 var(--h);letter-spacing:-.03em;margin-bottom:6px}
+.hero-facts span{font-size:14px;line-height:1.35;color:rgba(255,255,255,.82)}
+.hero-in>div{min-width:0}
+.hero-vis{position:relative;min-height:560px}
+.hero-vis .main{position:absolute;right:0;top:0;width:78%;height:100%;border-radius:var(--r);overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.5)}
+.hero-vis .main img{width:100%;height:100%;object-fit:cover}
+.hero-vis .sm{position:absolute;left:0;bottom:56px;width:42%;aspect-ratio:4/5;border-radius:20px;overflow:hidden;border:6px solid var(--blue);box-shadow:0 20px 40px -20px rgba(0,0,0,.5)}
+.hero-vis .sm img{width:100%;height:100%;object-fit:cover}
+.hero-vis .tag{position:absolute;right:20px;bottom:20px;background:#fff;color:var(--ink);border-radius:var(--r-m);padding:14px 16px;box-shadow:0 16px 32px -16px rgba(0,0,0,.4);display:flex;gap:14px;align-items:center}
+.hero-vis .tag b{font:800 24px/1 var(--h);letter-spacing:-.03em}
+.hero-vis .tag span{font-size:13px;line-height:1.35;color:var(--ink-2)}
+.hero-vis .tag i{width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(30,158,85,.18)}
+.hero [data-in]{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .9s var(--ease-out)}
+.loaded .hero [data-in]{opacity:1;transform:none}
+.hero-vis .main{clip-path:inset(0 0 100% 0 round 24px);transition:clip-path 1.2s var(--ease-out) .15s}
+.loaded .hero-vis .main{clip-path:inset(0 0 0 0 round 24px)}
+
+/* reveal */
+[data-r]{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease),transform .8s var(--ease-out)}
+[data-r].in{opacity:1;transform:none}
+
+/* scenarios */
+.scn-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.scn{background:var(--soft);border:2px solid transparent;border-radius:var(--r);padding:24px;text-align:left;cursor:pointer;transition:background .25s,border-color .25s,transform .25s var(--ease)}
+.scn:hover{transform:translateY(-3px)}
+.scn .ic{width:48px;height:48px;border-radius:14px;background:#fff;display:grid;place-items:center;margin-bottom:18px;transition:background .25s}
+.scn h3{font-size:20px;margin-bottom:6px}
+.scn p{font-size:15px;color:var(--ink-2);line-height:1.45}
+.scn.on{background:#fff;border-color:var(--blue);box-shadow:0 18px 40px -24px rgba(20,90,245,.45)}
+.scn.on .ic{background:var(--blue)}
+.scn.on .ic svg *{stroke:#fff}
+.scn-panel{margin-top:16px;background:var(--navy);color:var(--on-navy);border-radius:var(--r);padding:36px 40px;display:grid;grid-template-columns:1fr 2fr;gap:40px;align-items:center}
+.scn-panel h3{color:#fff;font-size:28px}
+.scn-panel .pp{color:var(--on-navy-2);font-size:16px;margin-top:10px}
+.scn-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;counter-reset:st}
+.scn-steps div{background:var(--navy-2);border-radius:var(--r-m);padding:18px;font-size:15px;line-height:1.45;position:relative;animation:pop .5s var(--ease-out) both}
+.scn-steps div:nth-child(2){animation-delay:.06s}.scn-steps div:nth-child(3){animation-delay:.12s}
+.scn-steps div b{display:block;font:800 13px/1 var(--h);color:var(--yellow);margin-bottom:10px;letter-spacing:.02em}
+.scn-steps a{color:#9EC0FF;border-bottom:1px solid rgba(158,192,255,.4)}
+@keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* constructor */
+.builder{background:var(--soft)}
+.b-grid>*,.c-grid>*,.room-grid>*,.faq-grid>*,.cta-in>*{min-width:0}
+.b-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;align-items:start}
+.zones{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.zone{background:#fff;border:2px solid transparent;border-radius:var(--r-m);padding:18px;display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:start;cursor:pointer;text-align:left;transition:border-color .25s,box-shadow .25s,transform .2s}
+.zone:hover{transform:translateY(-2px)}
+.zone .zi{width:52px;height:52px;border-radius:14px;background:var(--soft);display:grid;place-items:center;transition:background .25s}
+.zone .zi svg{width:28px;height:28px}
+.zone h4{font:800 17px/1.2 var(--h);letter-spacing:-.01em;display:flex;justify-content:space-between;gap:8px}
+.zone .chk{flex:none;width:22px;height:22px;border-radius:7px;border:2px solid var(--line);display:grid;place-items:center;transition:all .2s}
+.zone .meta{font-size:13px;color:var(--ink-3);margin-top:4px}
+.zone .desc{font-size:14px;color:var(--ink-2);margin-top:6px;line-height:1.4}
+.zone .step{display:none;margin-top:12px;align-items:center;gap:8px}
+.zone .step button{width:32px;height:32px;border-radius:50%;border:0;background:var(--soft);cursor:pointer;font:700 18px/1 var(--b);color:var(--ink)}
+.zone .step button:hover{background:var(--blue-soft);color:var(--blue)}
+.zone .step span{min-width:70px;text-align:center;font:800 16px/1 var(--h)}
+.zone.on{border-color:var(--blue);box-shadow:0 14px 30px -22px rgba(20,90,245,.6)}
+.zone.on .zi{background:var(--blue-soft)}
+.zone.on .chk{background:var(--blue);border-color:var(--blue)}
+.zone.on .chk::after{content:"";width:10px;height:6px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.zone.on .step{display:flex}
+.sum{position:sticky;top:96px;background:var(--navy);color:var(--on-navy);border-radius:var(--r);padding:32px}
+.sum .lbl{font-size:13px;color:var(--on-navy-2);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.sum .big{font:800 72px/1 var(--h);letter-spacing:-.05em;color:#fff;margin:10px 0 4px;font-variant-numeric:tabular-nums}
+.sum .big small{font-size:.38em;letter-spacing:-.01em}
+.sum .row{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-top:1px solid var(--line-navy);font-size:15px}
+.sum .row span{color:var(--on-navy-2)}
+.sum .row b{color:#fff;text-align:right}
+.ages{margin:22px 0 8px}
+.ages .bar{position:relative;height:10px;border-radius:5px;background:var(--navy-2);margin-top:10px}
+.ages .fill{position:absolute;top:0;bottom:0;border-radius:5px;background:var(--yellow);transition:left .5s var(--ease-out),width .5s var(--ease-out)}
+.ages .ticks{display:flex;justify-content:space-between;font-size:11px;color:var(--on-navy-2);margin-top:6px}
+.sum .btn{width:100%;margin-top:20px}
+.sum .note{font-size:13px;color:var(--on-navy-2);margin-top:14px;line-height:1.45}
+
+/* budget */
+.bud-bar{display:flex;height:92px;border-radius:var(--r-m);overflow:hidden;gap:4px}
+.bud-bar div{flex:var(--w);display:flex;flex-direction:column;justify-content:flex-end;padding:14px 16px;color:#fff;font:700 15px/1.25 var(--h);transform-origin:0 50%;transform:scaleX(0);transition:transform 1s var(--ease-out)}
+.bud-bar.in div{transform:scaleX(1)}
+.bud-bar div:nth-child(2){transition-delay:.1s}.bud-bar div:nth-child(3){transition-delay:.2s}.bud-bar div:nth-child(4){transition-delay:.3s}
+.bud-bar small{font:500 12px/1.3 var(--b);opacity:.85}
+.bud-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:24px}
+.bud-col{background:var(--soft);border-radius:var(--r);padding:28px}
+.bud-col h3{font-size:20px;margin-bottom:14px;display:flex;gap:10px;align-items:center}
+.bud-col ul{list-style:none;display:grid;gap:10px;font-size:16px;color:var(--ink-2)}
+.bud-col li{display:grid;grid-template-columns:20px 1fr;gap:8px}
+.bud-col li::before{content:"";width:8px;height:8px;border-radius:50%;margin-top:9px;background:var(--blue)}
+.bud-col.no li::before{background:var(--ink-3)}
+.bud-col.save{background:var(--yellow)}
+.bud-col.save p{font-size:16px;color:var(--ink);margin-bottom:12px}
+
+/* calculator */
+.calc{background:var(--navy);color:var(--on-navy)}
+.calc h2{color:#fff}
+.calc .lead{color:var(--on-navy-2)}
+.calc .chip{background:rgba(255,210,63,.16);color:var(--yellow)}
+.c-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:24px;align-items:start}
+.c-in{background:var(--navy-2);border-radius:var(--r);padding:32px;display:grid;grid-template-columns:1fr 1fr;gap:16px 16px}
+.c-in .grp{grid-column:1/-1;font:600 12px/1 var(--b);letter-spacing:.08em;text-transform:uppercase;color:var(--on-navy-2);margin-top:8px}
+.c-in .grp:first-child{margin-top:0}
+.fl label{display:block;font-size:14px;color:var(--on-navy-2);margin-bottom:8px}
+.fl .inp{position:relative}
+.fl input{width:100%;height:54px;border-radius:var(--r-s);border:1.5px solid var(--line-navy);background:rgba(255,255,255,.04);color:#fff;padding:0 54px 0 16px;font:700 18px/1 var(--h);outline:0;transition:border-color .2s,background .2s}
+.fl input::placeholder{color:rgba(232,238,248,.3);font-weight:500}
+.fl input:focus{border-color:var(--yellow);background:rgba(255,255,255,.07)}
+.fl .u{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--on-navy-2)}
+.c-out{background:#fff;color:var(--ink);border-radius:var(--r);padding:32px;position:sticky;top:96px}
+.c-out .lbl{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.c-res{display:grid;gap:0;margin-top:14px}
+.c-res div{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:16px;color:var(--ink-2)}
+.c-res b{font:800 22px/1 var(--h);color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.c-pay{margin-top:20px;background:var(--soft);border-radius:var(--r-m);padding:20px}
+.c-pay .v{font:800 56px/1 var(--h);letter-spacing:-.05em;color:var(--blue);margin-top:6px;font-variant-numeric:tabular-nums}
+.c-pay .v small{font-size:.36em;letter-spacing:0;color:var(--ink-2)}
+.c-hint{font-size:13px;color:var(--ink-3);margin-top:16px;line-height:1.5}
+.c-formula{font-size:13px;color:var(--on-navy-2);margin-top:16px;line-height:1.6}
+.c-formula code{font-family:inherit;color:#fff}
+
+/* cases */
+.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.case{display:flex;flex-direction:column;background:var(--soft);border-radius:var(--r);overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s}
+.case:hover{transform:translateY(-4px);box-shadow:0 24px 44px -28px rgba(20,36,58,.45)}
+.case .im{aspect-ratio:4/3;overflow:hidden;position:relative}
+.case .im img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease-out)}
+.case:hover .im img{transform:scale(1.05)}
+.case .im .chip{position:absolute;left:14px;top:14px;background:#fff;color:var(--ink);height:30px;font-size:13px}
+.case .bd{padding:22px 24px 26px;display:flex;flex-direction:column;flex:1}
+.case h3{font-size:22px}
+.case .where{font-size:15px;color:var(--ink-2);margin-top:4px}
+.case .nums{display:flex;gap:10px;margin:16px 0;flex-wrap:wrap}
+.case .nums span{background:#fff;border-radius:var(--r-s);padding:8px 12px;font-size:13px;color:var(--ink-2);line-height:1.2}
+.case .nums b{display:block;font:800 18px/1.1 var(--h);color:var(--ink);letter-spacing:-.02em}
+.case p{font-size:15px;color:var(--ink-2);line-height:1.5}
+.case .go{margin-top:auto;padding-top:16px;font-weight:600;font-size:15px;color:var(--blue);display:inline-flex;gap:8px;align-items:center}
+.case .go svg{transition:transform .25s var(--ease)}.case:hover .go svg{transform:translateX(4px)}
+
+/* room */
+.room{background:var(--soft)}
+.room-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}
+.req{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:32px 0}
+.req div{background:#fff;border-radius:var(--r-m);padding:20px}
+.req b{display:block;font:800 34px/1 var(--h);letter-spacing:-.04em;color:var(--blue);margin-bottom:8px}
+.req span{font-size:14px;color:var(--ink-2);line-height:1.35;display:block}
+.check{list-style:none;display:grid;gap:10px}
+.check li{display:grid;grid-template-columns:28px 1fr;gap:10px;font-size:16px;color:var(--ink-2)}
+.check li i{width:24px;height:24px;border-radius:50%;background:var(--blue-soft);display:grid;place-items:center}
+.room-img{border-radius:var(--r);overflow:hidden;position:relative;min-height:420px}
+.room-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.room-img .ov{position:absolute;left:20px;right:20px;bottom:20px;background:#fff;border-radius:var(--r-m);padding:20px 22px;display:flex;gap:16px;align-items:center}
+.room-img .ov b{font:800 18px/1.3 var(--h)}
+.room-img .ov p{font-size:14px;color:var(--ink-2);margin-top:4px}
+.room-img .ov .ic{flex:none;width:48px;height:48px;border-radius:14px;background:var(--yellow);display:grid;place-items:center}
+
+/* manage */
+.m-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;align-items:stretch}
+.m-card{border-radius:var(--r);padding:32px;background:var(--soft);display:flex;flex-direction:column}
+.m-card.b{background:var(--blue);color:#fff}
+.m-card .n{font:800 14px/1 var(--h);color:var(--blue);margin-bottom:20px}
+.m-card.b .n{color:var(--yellow)}
+.m-card h3{font-size:26px;margin-bottom:12px}
+.m-card p{font-size:16px;color:var(--ink-2)}
+.m-card.b p{color:rgba(255,255,255,.85)}
+.m-card ul{list-style:none;margin-top:18px;display:grid;gap:8px;font-size:15px}
+.m-card ul li{display:grid;grid-template-columns:18px 1fr;gap:8px}
+.m-card ul li::before{content:"→";color:var(--blue);font-weight:700}
+.m-card.b ul li::before{color:var(--yellow)}
+.m-card.b .gap{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.6)}
+.m-photo{border-radius:var(--r);overflow:hidden;position:relative;min-height:360px}
+.m-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 50%}
+.m-photo span{position:absolute;left:16px;bottom:16px;color:#fff;font-size:13px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+
+/* steps */
+.steps{background:var(--soft)}
+.st-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;position:relative}
+.st{background:#fff;border-radius:var(--r);padding:24px 22px 26px;position:relative}
+.st .n{width:40px;height:40px;border-radius:50%;background:var(--blue-soft);color:var(--blue);display:grid;place-items:center;font:800 15px/1 var(--h);margin-bottom:18px;transition:background .3s,color .3s}
+.st.in .n{background:var(--blue);color:#fff}
+.st h3{font-size:19px;margin-bottom:8px}
+.st p{font-size:14px;color:var(--ink-2);line-height:1.45}
+.st .t{display:inline-block;margin-top:14px;font:700 13px/1 var(--h);background:var(--yellow);border-radius:999px;padding:7px 11px}
+.st-total{margin-top:16px;background:var(--navy);color:#fff;border-radius:var(--r);padding:28px 32px;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.st-total b{font:800 48px/1 var(--h);letter-spacing:-.04em}
+.st-total b small{font-size:.4em;font-weight:700;letter-spacing:0}
+.st-total p{color:var(--on-navy-2);font-size:16px;max-width:30em}
+.st-total .btn{margin-left:auto}
+
+/* trust */
+.trust-box{background:var(--blue);color:#fff;border-radius:32px;overflow:hidden;display:grid;grid-template-columns:1.1fr 1fr}
+.trust-l{padding:56px}
+.trust-l .chip{background:rgba(255,255,255,.16);color:#fff}
+.trust-l h2{margin:18px 0 32px}
+.t-nums{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.t-nums div{background:rgba(255,255,255,.1);border-radius:var(--r-m);padding:20px}
+.t-nums b{display:block;font:800 40px/1 var(--h);letter-spacing:-.04em;margin-bottom:6px}
+.t-nums span{font-size:14px;color:rgba(255,255,255,.85);line-height:1.35}
+.certs{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}
+.certs span{height:32px;padding:0 12px;border-radius:8px;background:rgba(255,255,255,.14);display:inline-flex;align-items:center;font:600 13px/1 var(--b)}
+.trust-r{position:relative;min-height:420px}
+.trust-r img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.trust-r span{position:absolute;left:16px;bottom:16px;font-size:13px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+
+/* faq */
+.faq-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:48px}
+.faq-l h2{margin:18px 0 20px}
+.qa{border-bottom:1px solid var(--line)}
+.qa:first-child{border-top:1px solid var(--line)}
+.qa summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;font:800 20px/1.3 var(--h);letter-spacing:-.015em}
+.qa summary::-webkit-details-marker{display:none}
+.qa .pm{flex:none;width:36px;height:36px;border-radius:50%;background:var(--soft);position:relative;transition:background .3s}
+.qa .pm::before,.qa .pm::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2px;background:var(--ink);transform:translate(-50%,-50%);transition:transform .35s var(--ease)}
+.qa .pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+.qa[open] .pm{background:var(--blue)}
+.qa[open] .pm::before,.qa[open] .pm::after{background:#fff}
+.qa[open] .pm::after{transform:translate(-50%,-50%) rotate(0)}
+.qa .a{overflow:hidden}
+.qa .a p{padding:0 56px 24px 0;color:var(--ink-2);font-size:17px}
+
+/* form */
+.cta{padding:0 16px var(--sec)}
+.cta-box{max-width:1440px;margin:0 auto;background:var(--blue);border-radius:32px;color:#fff;overflow:hidden;position:relative}
+.cta-box::after{content:"";position:absolute;width:640px;height:640px;border-radius:50%;right:-200px;top:-260px;background:radial-gradient(circle,rgba(255,210,63,.25),rgba(255,210,63,0) 65%);pointer-events:none}
+.cta-in{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;padding:72px var(--pad);max-width:calc(var(--max) + var(--pad)*2);margin:0 auto;position:relative;z-index:1}
+.cta-in h2{margin:18px 0 20px}
+.cta-in .lead{color:rgba(255,255,255,.85)}
+.cta-in .contacts{display:flex;gap:10px;margin-top:32px;flex-wrap:wrap}
+.cta-in .contacts a{display:inline-flex;align-items:center;height:48px;padding:0 18px;border-radius:999px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.4);font-weight:600;font-size:15px}
+form.lf{background:#fff;color:var(--ink);border-radius:var(--r);padding:32px;display:grid;grid-template-columns:1fr 1fr;gap:14px;position:relative}
+.f{display:flex;flex-direction:column;gap:7px;grid-column:span 2}
+.f.h{grid-column:span 1}
+.f label,.f .lb{font-size:13px;font-weight:600;color:var(--ink-2)}
+.f input,.f select{height:54px;border-radius:var(--r-s);border:1.5px solid var(--line);background:var(--soft);padding:0 16px;font-size:17px;outline:0;width:100%;appearance:none;-webkit-appearance:none;transition:border-color .2s,background .2s}
+.f select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%2314243A' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
+.f input:focus,.f select:focus{border-color:var(--blue);background:#fff}
+.chips2{display:flex;gap:8px;flex-wrap:wrap}
+.chips2 label{position:relative;cursor:pointer}
+.chips2 input{position:absolute;opacity:0;pointer-events:none}
+.chips2 span{display:inline-flex;align-items:center;height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);font-size:15px;font-weight:500;transition:all .2s}
+.chips2 input:checked+span{background:var(--ink);border-color:var(--ink);color:#fff}
+.chips2 input:focus-visible+span{outline:2px solid var(--blue);outline-offset:2px}
+.picked{grid-column:span 2;background:var(--blue-soft);border-radius:var(--r-s);padding:12px 14px;font-size:14px;color:var(--blue);display:none}
+.picked.on{display:block}
+form.lf .btn{grid-column:span 2;height:60px;margin-top:6px}
+form.lf .fine{grid-column:span 2;font-size:13px;color:var(--ink-3)}
+.sent{position:absolute;inset:0;border-radius:var(--r);background:#fff;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px;padding:40px;opacity:0;pointer-events:none;transition:opacity .4s}
+form.done .sent{opacity:1;pointer-events:auto}
+.sent .ok{width:60px;height:60px;border-radius:50%;background:var(--green);display:grid;place-items:center}
+.sent h3{font-size:28px}
+
+.foot{padding:48px 0 96px;font-size:14px;color:var(--ink-3)}
+.foot .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);padding-top:32px}
+.foot img{width:130px}
+.foot nav{display:flex;gap:20px;flex-wrap:wrap}
+.foot nav a:hover{color:var(--blue)}
+
+/* responsive */
+@media (max-width:1199px){
+  :root{--pad:32px;--sec:88px}
+  .hdr nav,.hdr .btn{display:none}.burger{display:block}
+  .hero-in{grid-template-columns:1fr;padding-top:56px}
+  .hero-vis{min-height:460px}
+  .scn-tabs{grid-template-columns:1fr 1fr}
+  .scn-panel{grid-template-columns:1fr}
+  .b-grid,.c-grid,.room-grid,.faq-grid,.cta-in,.trust-box{grid-template-columns:1fr}
+  .sum,.c-out{position:relative;top:0}
+  .case-grid{grid-template-columns:1fr 1fr}
+  .m-grid{grid-template-columns:1fr 1fr}.m-photo{grid-column:1/-1;min-height:320px;order:-1}
+  .st-grid{grid-template-columns:1fr 1fr}
+  .bud-cols{grid-template-columns:1fr}
+}
+@media (max-width:767px){
+  :root{--pad:16px;--sec:64px;--r:20px}
+  body{font-size:16px}
+  .lead{font-size:17px}
+  h2{font-size:clamp(30px,8.4vw,38px)}
+  .hdr .wrap{height:64px}.hdr .logo img{width:120px}
+  .hero{padding:8px 8px 0}
+  .hero-box{border-radius:24px}
+  .hero-in{padding:36px 16px 24px;gap:32px}
+  .hero h1{font-size:clamp(38px,11vw,48px);margin:18px 0 16px}
+  .hero p.sub{font-size:17px}
+  .hero .ctas{flex-direction:column;margin-top:24px}
+  .hero .ctas .btn{width:100%}
+  .hero-facts{gap:8px;margin-top:28px}
+  .hero-facts div{padding:12px}
+  .hero-facts b{font-size:22px}
+  .hero-facts span{font-size:12px}
+  .hero-vis{min-height:380px}
+  .hero-vis .main{width:84%}
+  .hero-vis .sm{width:44%;bottom:40px;border-width:4px}
+  .hero-vis .tag{right:10px;bottom:10px;padding:10px 12px;gap:10px}
+  .hero-vis .tag b{font-size:18px}
+  .head{margin-bottom:32px}
+  .scn-tabs{gap:10px}
+  .scn{padding:16px}
+  .scn .ic{width:40px;height:40px;margin-bottom:12px}
+  .scn h3{font-size:16px}
+  .scn p{font-size:13px}
+  .scn-panel{padding:24px 20px}
+  .scn-panel h3{font-size:22px}
+  .scn-steps{grid-template-columns:1fr}
+  .zones{grid-template-columns:1fr}
+  .sum{padding:24px}
+  .sum .big{font-size:56px}
+  .bud-bar{height:auto;flex-direction:column}
+  .bud-bar div{flex:none;padding:12px 14px;transform-origin:0 50%}
+  .bud-col{padding:22px}
+  .c-in{padding:20px;grid-template-columns:1fr}
+  .c-out{padding:22px}
+  .c-pay .v{font-size:44px}
+  .case-grid{grid-template-columns:1fr}
+  .req{grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .req div{padding:14px 12px}
+  .req b{font-size:24px}
+  .req span{font-size:12px}
+  .room-img{min-height:340px}
+  .m-grid{grid-template-columns:1fr}
+  .m-card{padding:24px}
+  .st-grid{grid-template-columns:1fr}
+  .st-total{padding:22px}
+  .st-total b{font-size:38px}
+  .st-total .btn{margin-left:0;width:100%}
+  .trust-l{padding:28px 20px}
+  .t-nums b{font-size:30px}
+  .trust-r{min-height:280px}
+  .qa summary{font-size:17px;padding:20px 0}
+  .qa .a p{padding:0 0 20px;font-size:16px}
+  .cta{padding:0 8px var(--sec)}
+  .cta-box{border-radius:24px}
+  .cta-in{padding:40px 16px 16px;gap:28px}
+  form.lf{padding:20px;grid-template-columns:1fr}
+  .f.h{grid-column:span 2}
+  .gaps-toggle{left:auto;right:12px;bottom:12px;height:36px;font-size:12px}
+  .btn{height:54px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+  [data-r],.hero [data-in]{opacity:1!important;transform:none!important}
+  .hero-vis .main{clip-path:none!important}
+  .bud-bar div{transform:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body class="at-top">
+<div class="progress" id="progress"></div>
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a href="#top" class="logo"><img src="assets/img/logo.svg" alt="UNITRAMP"></a>
+    <nav aria-label="Разделы">
+      <a href="#builder">Конструктор</a>
+      <a href="#calc">Экономика</a>
+      <a href="#cases">Парки</a>
+      <a href="#room">Помещение</a>
+      <a href="#manage">Управление</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+    <a href="#form" class="btn btn-b">Рассчитать парк</a>
+    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+<div class="mmenu" id="mmenu">
+  <a href="#scenario">С чего начать</a><a href="#builder">Конструктор парка</a><a href="#calc">Экономика</a><a href="#cases">Парки</a><a href="#room">Помещение</a><a href="#manage">Управление</a><a href="#faq">Вопросы</a>
+  <a href="#form" class="btn btn-b">Рассчитать парк</a>
+</div>
+
+<main id="top">
+<!-- 1 HERO -->
+<section class="hero">
+  <div class="hero-box">
+    <div class="hero-in">
+      <div>
+        <span class="chip y" data-in>Для инвесторов и операторов</span>
+        <h1 data-in style="transition-delay:.08s">Семейный парк как <em>бизнес</em></h1>
+        <p class="sub" data-in style="transition-delay:.16s">Под ключ за 10–20 млн ₽. Подберём формат под ваш город и помещение, спроектируем, произведём на своём заводе и запустим. Вы получаете работающий парк, а не набор оборудования.</p>
+        <div class="ctas" data-in style="transition-delay:.24s">
+          <a href="#form" class="btn btn-y">Рассчитать парк для моего города <svg class="arr" viewBox="0 0 18 18" fill="none"><path d="M3 9h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8"/></svg></a>
+          <a href="#cases" class="btn btn-g">Смотреть парки</a>
+        </div>
+        <div class="hero-facts" data-in style="transition-delay:.32s">
+          <div><b>с 2014</b><span>строим семейные парки</span></div>
+          <div><b data-count="81">81</b><span>проект в 63 городах и 5 странах</span></div>
+          <div><b>40–55</b><span>рабочих дней от договора до открытия</span></div>
+        </div>
+      </div>
+      <div class="hero-vis">
+        <div class="main"><img src="assets/img/p-kometa-3.jpg" alt="Ребёнок на аттракционе в детском центре «Комета»" fetchpriority="high"></div>
+        <div class="sm" data-in style="transition-delay:.5s"><img src="assets/img/p-orbita-1.jpg" alt="Мальчик у интерактивной стены" style="object-position:35% 50%"></div>
+        <div class="tag" data-in style="transition-delay:.7s"><i></i><div><b>600 м²</b><br><span>«Комета», Орск<br>55 рабочих дней</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 SCENARIOS -->
+<section class="sec" id="scenario">
+  <div class="wrap">
+    <div class="head">
+      <div class="l"><span class="chip" data-r>С чего начать</span><h2 data-r>Выберите свою ситуацию</h2></div>
+      <p class="lead" data-r>Покажем, с чего начинается проект именно в вашем случае.</p>
+    </div>
+    <div class="scn-tabs" id="scnTabs">
+      <button class="scn on" data-s="0" data-r type="button"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 10l9-6 9 6v10H3z" stroke="#145AF5" stroke-width="2" stroke-linejoin="round"/><path d="M10 20v-6h4v6" stroke="#145AF5" stroke-width="2"/></svg></div><h3>Есть помещение</h3><p>Нашли площадь в ТЦ и хотите понять, что в ней поставить</p></button>
+      <button class="scn" data-s="1" data-r type="button" style="transition-delay:.05s"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#145AF5" stroke-width="2"/><path d="M16.5 16.5L21 21" stroke="#145AF5" stroke-width="2" stroke-linecap="round"/></svg></div><h3>Ищу помещение</h3><p>Есть деньги и город, нужна подходящая площадка</p></button>
+      <button class="scn" data-s="2" data-r type="button" style="transition-delay:.1s"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#145AF5" stroke-width="2"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6" stroke="#145AF5" stroke-width="2" stroke-linecap="round"/></svg></div><h3>Буду управлять сам</h3><p>Хотите свой семейный бизнес и готовы в нём работать</p></button>
+      <button class="scn" data-s="3" data-r type="button" style="transition-delay:.15s"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 17l5-5 4 4 7-8" stroke="#145AF5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 8h5v5" stroke="#145AF5" stroke-width="2" stroke-linecap="round"/></svg></div><h3>Хочу вложить</h3><p>Готовы инвестировать, а управлять будет управляющий</p></button>
+    </div>
+    <div class="scn-panel" id="scnPanel" data-r></div>
+  </div>
+</section>
+
+<!-- 3 BUILDER -->
+<section class="sec builder" id="builder">
+  <div class="wrap">
+    <div class="head">
+      <div class="l"><span class="chip" data-r>Конструктор</span><h2 data-r>Соберите свой парк</h2></div>
+      <p class="lead" data-r>Владельцы парков ездят по чужим объектам и собирают своё сочетание зон. Попробуйте здесь: отметьте зоны и посмотрите, сколько площади они займут.</p>
+    </div>
+    <div class="b-grid">
+      <div class="zones" id="zones"></div>
+      <aside class="sum" data-r>
+        <div class="lbl">Игровая площадь</div>
+        <div class="big"><span id="zTotal">0</span> <small>м²</small></div>
+        <div class="small" style="color:var(--on-navy-2)">без учёта входной группы, гардероба и зоны родителей <span class="gap">доля инфраструктуры в площади парка</span></div>
+        <div class="ages"><div class="lbl">Возраст гостей</div><div class="bar"><div class="fill" id="zAge"></div></div><div class="ticks"><span>0</span><span>4</span><span>8</span><span>12</span><span>16+</span></div></div>
+        <div class="row"><span>Выбрано зон</span><b id="zCount">0</b></div>
+        <div class="row"><span>Высота потолков</span><b id="zH">от 4,5 м</b></div>
+        <div class="row"><span>Подходит для</span><b id="zFit">—</b></div>
+        <a href="#form" class="btn btn-y" id="zSend">Получить расчёт этой подборки</a>
+        <p class="note">Площади указаны минимальные, по данным UNITRAMP. Точный состав и размеры подбираем под помещение и аудиторию города.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- 4 BUDGET -->
+<section class="sec" id="budget">
+  <div class="wrap">
+    <div class="head">
+      <div class="l"><span class="chip" data-r>Бюджет</span><h2 data-r>Из чего складываются <span style="white-space:nowrap">10–20 млн</span></h2></div>
+      <p class="lead" data-r>Честно разделяем, что входит в нашу смету, а что вы считаете отдельно. Так в бизнес-плане не появится дыр. <span class="gap">доли статей в бюджете</span></p>
+    </div>
+    <div class="bud-bar" data-r data-bud>
+      <div style="--w:1;background:#5B8BFF">Проект и 3D<small>планировка, зонирование, визуализация</small></div>
+      <div style="--w:4;background:var(--blue)">Оборудование<small>производство на своём заводе в Новосибирске</small></div>
+      <div style="--w:1.4;background:var(--blue-2)">Доставка и монтаж<small>своя бригада, 10–21 день</small></div>
+      <div style="--w:.8;background:var(--navy)">Запуск<small>документы, обучение</small></div>
+    </div>
+    <div class="bud-cols">
+      <div class="bud-col" data-r><h3>Входит в нашу смету</h3><ul><li>Подбор формата и 3D-проект под помещение</li><li>Оборудование с сертификатами и паспортами</li><li>Доставка и монтаж своей бригадой</li><li>Документы для запуска, обучение персонала</li><li>Гарантия 12 месяцев</li></ul></div>
+      <div class="bud-col no" data-r style="transition-delay:.06s"><h3>Считаете отдельно</h3><ul><li>Аренда помещения</li><li>Ремонт и отделка, если помещение не готово</li><li>Персонал и его зарплата</li><li>Маркетинг к открытию</li><li>Касса, учёт, вывеска <span class="gap ok">состав статей</span></li></ul></div>
+      <div class="bud-col save" data-r style="transition-delay:.12s"><h3>Как сэкономить</h3><p><b>Шеф-монтаж.</b> Монтируете своими силами по сборочным видео и схемам, мы консультируем. Так сделал владелец «Пружины» в Губкинском и заметно сэкономил на монтаже.</p><p class="small" style="color:var(--ink)">Подходит, если у вас есть своя команда для сборки.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 CALCULATOR -->
+<section class="sec calc dark" id="calc">
+  <div class="wrap">
+    <div class="head">
+      <div class="l"><span class="chip" data-r>Экономика парка</span><h2 data-r>Посчитайте окупаемость на своих цифрах</h2></div>
+      <p class="lead" data-r>Введите свои допущения: сколько гостей ждёте, какой чек и сколько стоит аренда. Калькулятор покажет выручку, расходы и срок окупаемости. Это пример расчёта, а не обещание дохода.</p>
+    </div>
+    <div class="c-grid">
+      <div class="c-in" id="cIn" data-r>
+        <div class="grp">Гости и чек</div>
+        <div class="fl"><label for="c1">Гостей в будний день</label><div class="inp"><input id="c1" inputmode="numeric" placeholder="0"><span class="u">чел.</span></div></div>
+        <div class="fl"><label for="c2">Гостей в выходной день</label><div class="inp"><input id="c2" inputmode="numeric" placeholder="0"><span class="u">чел.</span></div></div>
+        <div class="fl"><label for="c3">Средний чек</label><div class="inp"><input id="c3" inputmode="numeric" placeholder="0"><span class="u">₽</span></div></div>
+        <div class="fl"><label for="c4">Площадь парка</label><div class="inp"><input id="c4" inputmode="numeric" placeholder="0"><span class="u">м²</span></div></div>
+        <div class="grp">Расходы в месяц</div>
+        <div class="fl"><label for="c5">Аренда за м²</label><div class="inp"><input id="c5" inputmode="numeric" placeholder="0"><span class="u">₽/м²</span></div></div>
+        <div class="fl"><label for="c6">Персонал</label><div class="inp"><input id="c6" inputmode="numeric" placeholder="0"><span class="u">₽</span></div></div>
+        <div class="fl"><label for="c7">Прочие расходы</label><div class="inp"><input id="c7" inputmode="numeric" placeholder="0"><span class="u">₽</span></div></div>
+        <div class="fl"><label for="c8">Вложения в запуск</label><div class="inp"><input id="c8" inputmode="numeric" placeholder="0"><span class="u">₽</span></div></div>
+        <p class="c-formula" style="grid-column:1/-1">Выручка = (гости в будни × 22 + гости в выходные × 8) × средний чек.<br>Расходы = аренда за м² × площадь + персонал + прочие.<br>Окупаемость = вложения ÷ (выручка − расходы).<br><span class="gap">типовые значения по нашим паркам 300–600 м² для подсказок</span></p>
+      </div>
+      <div class="c-out" data-r style="transition-delay:.08s">
+        <div class="lbl">Ваш парк в месяц</div>
+        <div class="c-res">
+          <div>Выручка <b id="r1">—</b></div>
+          <div>Расходы <b id="r2">—</b></div>
+          <div>Операционная прибыль <b id="r3">—</b></div>
+        </div>
+        <div class="c-pay"><div class="lbl">Срок окупаемости</div><div class="v" id="r4">—</div></div>
+        <p class="c-hint" id="cHint">Заполните поля слева. Точный расчёт под ваш город и помещение подготовим бесплатно: с конкурентами, аудиторией и сценариями посещаемости.</p>
+        <a href="#form" class="btn btn-b" style="width:100%;margin-top:16px">Заказать расчёт под мой город</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 CASES -->
+<section class="sec" id="cases">
+  <div class="wrap">
+    <div class="head">
+      <div class="l"><span class="chip" data-r>Парки</span><h2 data-r>Парки на 300–650 м², которые уже работают</h2></div>
+      <p class="lead" data-r>Масштаб, сопоставимый с бюджетом 10–20 млн. Данные со страниц проектов на unitramp.ru.</p>
+    </div>
+    <div class="case-grid" id="caseGrid"></div>
+  </div>
+</section>
+
+<!-- 7 ROOM -->
+<section class="sec room" id="room">
+  <div class="wrap room-grid">
+    <div>
+      <span class="chip" data-r>Помещение</span>
+      <h2 data-r style="margin:18px 0 20px">Какое помещение искать в ТЦ</h2>
+      <p class="lead" data-r>Ошибка в помещении дороже ошибки в оборудовании. Проверьте три параметра до подписания аренды.</p>
+      <div class="req" data-r>
+        <div><b>200+ м²</b><span>площадь помещения</span></div>
+        <div><b>4,5 м</b><span>высота потолков, для батутной арены от 5 м</span></div>
+        <div><b>300 кг</b><span>допустимая нагрузка на м² пола</span></div>
+      </div>
+      <ul class="check" data-r>
+        <li><i><svg width="12" height="12" viewBox="0 0 16 16"><path d="M2 8.5l4 4 8-9" fill="none" stroke="#145AF5" stroke-width="2.4"/></svg></i>Нагрузка на перекрытия и уровень освещённости</li>
+        <li><i><svg width="12" height="12" viewBox="0 0 16 16"><path d="M2 8.5l4 4 8-9" fill="none" stroke="#145AF5" stroke-width="2.4"/></svg></i>Соответствие пожарным нормам и СНиП</li>
+        <li><i><svg width="12" height="12" viewBox="0 0 16 16"><path d="M2 8.5l4 4 8-9" fill="none" stroke="#145AF5" stroke-width="2.4"/></svg></i>Удобный вход и поток семей рядом: фудкорт, кино, детские магазины</li>
+      </ul>
+    </div>
+    <div class="room-img" data-r>
+      <img src="assets/img/pr-room.jpg" alt="Пустое помещение перед началом работ" loading="lazy">
+      <div class="ov"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 21V8l9-5 9 5v13" stroke="#14243A" stroke-width="2"/><path d="M8 21v-5h8v5M3 12h18" stroke="#14243A" stroke-width="2"/></svg></div><div><b>Поможем подобрать место</b><p>Специалист выполнит контрольный замер, пришлём чек-лист для подбора помещения.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 MANAGE -->
+<section class="sec" id="manage">
+  <div class="wrap">
+    <div class="head">
+      <div class="l"><span class="chip" data-r>Управление</span><h2 data-r>Кто будет управлять парком</h2></div>
+      <p class="lead" data-r>Без управляющего нет бизнеса, поэтому этот вопрос решаем до запуска, а не после.</p>
+    </div>
+    <div class="m-grid">
+      <div class="m-photo" data-r><img src="assets/img/hero.jpg" alt="Инструктор с детьми на полосе препятствий" loading="lazy"><span>«Орбита Семьи», Севастополь</span></div>
+      <div class="m-card" data-r style="transition-delay:.06s"><div class="n">Путь 1</div><h3>Управляете сами</h3><p>Семейный бизнес, в котором вы сами отвечаете за гостей и команду.</p><ul><li>Обучаем персонал при запуске</li><li>Передаём документы и инструкции по эксплуатации</li><li>Остаёмся на связи после открытия</li></ul></div>
+      <div class="m-card b" data-r style="transition-delay:.12s"><div class="n">Путь 2</div><h3>Нанимаете управляющего</h3><p>Вы вкладываете деньги, а парком руководит опытный управляющий.</p><ul><li>Помогаем найти управляющего с опытом в индустрии <span class="gap ok">делаем ли это системно</span></li><li>Вы видите, кто будет вести ваш парк, до старта</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 STEPS -->
+<section class="sec steps" id="steps">
+  <div class="wrap">
+    <div class="head">
+      <div class="l"><span class="chip" data-r>Этапы</span><h2 data-r>От идеи до открытия</h2></div>
+      <p class="lead" data-r>Один договор и один менеджер проекта на всех этапах.</p>
+    </div>
+    <div class="st-grid">
+      <div class="st" data-r><div class="n">1</div><h3>Расчёт и 3D</h3><p>Подбираем формат под город и помещение, показываем будущий парк в 3D.</p></div>
+      <div class="st" data-r style="transition-delay:.05s"><div class="n">2</div><h3>Договор</h3><p>Фиксируем состав оборудования, цену и график.</p></div>
+      <div class="st" data-r style="transition-delay:.1s"><div class="n">3</div><h3>Производство</h3><p>Изготавливаем на своём заводе в Новосибирске.</p></div>
+      <div class="st" data-r style="transition-delay:.15s"><div class="n">4</div><h3>Монтаж</h3><p>Своя бригада или шеф-монтаж вашими силами.</p><span class="t">10–21 день</span></div>
+      <div class="st" data-r style="transition-delay:.2s"><div class="n">5</div><h3>Запуск</h3><p>Документы, обучение персонала, открытие.</p></div>
+    </div>
+    <div class="st-total" data-r><b>40–55 <small>рабочих дней</small></b><p>от договора до открытия. Типичный срок по 23 нашим проектам, у которых указан срок.</p><a href="#form" class="btn btn-y">Начать с расчёта</a></div>
+  </div>
+</section>
+
+<!-- 10 TRUST -->
+<section class="sec" id="trust">
+  <div class="wrap">
+    <div class="trust-box" data-r>
+      <div class="trust-l">
+        <span class="chip">Надёжность</span>
+        <h2>Производитель, а не посредник</h2>
+        <div class="t-nums">
+          <div><b>12 лет</b><span>на рынке, с 2014 года</span></div>
+          <div><b>81</b><span>проект в 63 городах и 5 странах</span></div>
+          <div><b>3 цеха</b><span>2 500 м² производства в Новосибирске</span></div>
+          <div><b>12 мес.</b><span>гарантия на оборудование</span></div>
+        </div>
+        <div class="certs"><span>ТР ЕАЭС 038</span><span>ГОСТ 33807</span><span>Член РАППА</span></div>
+      </div>
+      <div class="trust-r"><img src="assets/img/f-factory.jpg" alt="Производство мягких элементов UNITRAMP" loading="lazy"><span>Производство UNITRAMP</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 FAQ -->
+<section class="sec" id="faq" style="padding-top:0">
+  <div class="wrap faq-grid">
+    <div class="faq-l"><span class="chip" data-r>Вопросы</span><h2 data-r>Что спрашивают инвесторы</h2><p class="lead" data-r>Не нашли ответ? Напишите в WhatsApp, ответит менеджер проекта.</p></div>
+    <div data-r>
+      <details class="qa"><summary>Через сколько окупится парк?<i class="pm"></i></summary><div class="a"><p>Зависит от города, площади, чека и аренды. Прикиньте в калькуляторе выше, а точный расчёт под ваше помещение сделаем с учётом конкурентов и аудитории. <span class="gap">типичный срок окупаемости по нашим паркам</span></p></div></details>
+      <details class="qa"><summary>Это франшиза?<i class="pm"></i></summary><div class="a"><p>Нет, франшизу мы не продаём. Парк работает под вашим названием, без паушального взноса и роялти. Мы проектируем, производим и запускаем. <span class="gap ok">формулировка про франшизу</span></p></div></details>
+      <details class="qa"><summary>Что, если в городе уже есть парки?<i class="pm"></i></summary><div class="a"><p>До проекта смотрим, какие парки уже работают в городе, и подбираем формат, которого там нет. Например, ниндзя-зону, если в городе её ещё никто не поставил.</p></div></details>
+      <details class="qa"><summary>Можно начать без помещения?<i class="pm"></i></summary><div class="a"><p>Да. Пришлём чек-лист, поможем оценить варианты площадок и выполним контрольный замер выбранного помещения.</p></div></details>
+      <details class="qa"><summary>Сколько длится проект?<i class="pm"></i></summary><div class="a"><p>От договора до открытия обычно 40–55 рабочих дней. Монтаж на объекте от 10 до 21 дня.</p></div></details>
+      <details class="qa"><summary>Есть рассрочка или лизинг?<i class="pm"></i></summary><div class="a"><p><span class="gap">условия рассрочки и лизинга</span></p></div></details>
+      <details class="qa"><summary>Какая гарантия и документы?<i class="pm"></i></summary><div class="a"><p>Гарантия 12 месяцев. Оборудование соответствует ТР ЕАЭС 038 и ГОСТ 33807, к изделиям прилагаются паспорта и инструкции.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- 12 FORM -->
+<section class="cta" id="form">
+  <div class="cta-box">
+    <div class="cta-in">
+      <div>
+        <span class="chip w" data-r>Следующий шаг</span>
+        <h2 data-r>Получите расчёт парка для вашего города</h2>
+        <p class="lead" data-r>Подберём формат, оценим бюджет и покажем, что нужно для расчёта окупаемости. Менеджер проекта свяжется в течение рабочего дня.</p>
+        <div class="contacts" data-r><a href="tel:88007007809">8 800 700-78-09</a><a href="https://wa.me/79607901070" target="_blank" rel="noopener">WhatsApp</a></div>
+      </div>
+      <form class="lf" id="lf" novalidate data-r>
+        <div class="f h"><label for="f-city">Город</label><input id="f-city" placeholder="Например, Тюмень"></div>
+        <div class="f h"><label for="f-scn">Ситуация</label><select id="f-scn"><option>Есть помещение</option><option>Ищу помещение</option><option>Буду управлять сам</option><option>Хочу вложить, нужен управляющий</option></select></div>
+        <div class="f h"><label for="f-area">Площадь, если есть</label><input id="f-area" inputmode="numeric" placeholder="м²"></div>
+        <div class="f h"><label for="f-tel">Телефон</label><input id="f-tel" type="tel" inputmode="tel" placeholder="+7 (___) ___-__-__"></div>
+        <div class="f"><span class="lb">Бюджет</span><div class="chips2"><label><input type="radio" name="b"><span>до 10 млн</span></label><label><input type="radio" name="b" checked><span>10–15 млн</span></label><label><input type="radio" name="b"><span>15–20 млн</span></label><label><input type="radio" name="b"><span>больше 20 млн</span></label></div></div>
+        <div class="picked" id="picked"></div>
+        <button class="btn btn-b" type="submit">Получить расчёт парка <svg class="arr" viewBox="0 0 18 18" fill="none"><path d="M3 9h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8"/></svg></button>
+        <p class="fine">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.</p>
+        <div class="sent"><div class="ok"><svg width="26" height="26" viewBox="0 0 16 16"><path d="M2 8.5l4 4 8-9" fill="none" stroke="#fff" stroke-width="2"/></svg></div><h3>Заявка принята</h3><p class="small">Это прототип: форма ничего не отправляет. На рабочем сайте заявка уйдёт в CRM вместе с подборкой зон из конструктора.</p><button type="button" id="again" style="background:none;border:0;border-bottom:1.5px solid;font-weight:600;cursor:pointer">Заполнить снова</button></div>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <img src="assets/img/logo.svg" alt="UNITRAMP">
+    <nav><a href="#builder">Конструктор</a><a href="#calc">Экономика</a><a href="#cases">Парки</a><a href="https://unitramp.ru" target="_blank" rel="noopener">unitramp.ru</a></nav>
+    <span>Прототип сайта для инвесторов · версия 1 от 14.10.2026</span>
+  </div>
+</footer>
+<button class="gaps-toggle" id="gapsToggle" type="button">Пробелы в данных <b id="gapsN">0</b></button>
+
+<script>
+(function(){
+var RM=matchMedia('(prefers-reduced-motion: reduce)').matches, D=document;
+var $=function(s,c){return (c||D).querySelector(s)}, $$=function(s,c){return [].slice.call((c||D).querySelectorAll(s))};
+function nf(n){return Math.round(n).toLocaleString('ru-RU')}
+
+/* scenarios */
+var SC=[
+ {t:'Есть помещение',p:'Начинаем с замера и расчёта: что поместится и сколько это принесёт.',s:[['Шаг 1','Присылаете план, фото и адрес помещения'],['Шаг 2','Проверяем высоту, нагрузку и нормы, делаем контрольный замер'],['Шаг 3','Готовим 3D-проект и расчёт. <a href="#builder">Соберите зоны в конструкторе</a>']]},
+ {t:'Ищу помещение',p:'Сначала город и площадка. Ошибка в помещении дороже ошибки в оборудовании.',s:[['Шаг 1','Получаете чек-лист для подбора помещения'],['Шаг 2','Сравниваем варианты по площади, потолкам и потоку семей. <a href="#room">Требования</a>'],['Шаг 3','Замеряем выбранное помещение и считаем парк']]},
+ {t:'Буду управлять сам',p:'Вы получаете парк и команду, обученную при запуске.',s:[['Шаг 1','Подбираем формат под ваш город и бюджет'],['Шаг 2','Проектируем, производим, монтируем'],['Шаг 3','Обучаем персонал и передаём документы. <a href="#manage">Подробнее</a>']]},
+ {t:'Хочу вложить',p:'Вы инвестируете, а парком управляет опытный управляющий.',s:[['Шаг 1','Считаем экономику на ваших допущениях. <a href="#calc">Калькулятор</a>'],['Шаг 2','Определяем, кто будет управлять парком'],['Шаг 3','Запускаем парк под ключ и передаём управляющему']]}
+];
+var panel=$('#scnPanel'), fScn=$('#f-scn');
+function setScn(i){
+  $$('.scn').forEach(function(b){b.classList.toggle('on',+b.dataset.s===i)});
+  var s=SC[i]; panel.innerHTML='<div><h3>'+s.t+'</h3><p class="pp">'+s.p+'</p></div><div class="scn-steps">'+s.s.map(function(x){return '<div><b>'+x[0]+'</b>'+x[1]+'</div>'}).join('')+'</div>';
+  fScn.selectedIndex=i;
+}
+$$('.scn').forEach(function(b){b.addEventListener('click',function(){setScn(+b.dataset.s)})});
+setScn(0);
+
+/* builder (zones and min areas from unitramp.ru/aktiviti-park-pod-klyuch) */
+var IC={
+ maze:'<path d="M4 4h16v16H4z M4 10h10 M10 10v10 M14 4v6 M14 14h6" stroke="#145AF5" stroke-width="2" fill="none"/>',
+ ninja:'<path d="M3 20L9 8l4 6 3-4 5 10" stroke="#145AF5" stroke-width="2" fill="none" stroke-linejoin="round"/><circle cx="16" cy="5" r="2" stroke="#145AF5" stroke-width="2" fill="none"/>',
+ tramp:'<ellipse cx="12" cy="14" rx="9" ry="4" stroke="#145AF5" stroke-width="2" fill="none"/><path d="M5 16v4M19 16v4M12 3v6M9 6l3 3 3-3" stroke="#145AF5" stroke-width="2" fill="none"/>',
+ climb:'<path d="M5 21V3h14v18" stroke="#145AF5" stroke-width="2" fill="none"/><circle cx="9" cy="8" r="1.5" fill="#145AF5"/><circle cx="15" cy="11" r="1.5" fill="#145AF5"/><circle cx="10" cy="15" r="1.5" fill="#145AF5"/>',
+ net:'<path d="M3 6l18 12M3 18L21 6M3 12h18M12 3v18" stroke="#145AF5" stroke-width="1.8" fill="none"/>',
+ troll:'<path d="M2 5l20 4" stroke="#145AF5" stroke-width="2"/><path d="M11 7v6" stroke="#145AF5" stroke-width="2"/><circle cx="11" cy="16" r="3" stroke="#145AF5" stroke-width="2" fill="none"/>',
+ volc:'<path d="M3 20l6-11h6l6 11z" stroke="#145AF5" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M15 9c2 2 3 6 2 11" stroke="#145AF5" stroke-width="2" fill="none"/>',
+ hive:'<path d="M12 3l7 4v8l-7 4-7-4V7z" stroke="#145AF5" stroke-width="2" fill="none"/><path d="M12 7l3.5 2v4L12 15l-3.5-2V9z" stroke="#145AF5" stroke-width="1.6" fill="none"/>'
+};
+var Z=[
+ {k:'maze',n:'Детский лабиринт',a:[3,10],m:30,d:'Многоуровневый, с горками. Обязательная зона любого парка.',on:1},
+ {k:'ninja',n:'Ниндзя-парк',a:[9,14],m:30,d:'Полоса препятствий: ловкость, скорость, азарт.',on:1},
+ {k:'volc',n:'Вулкан',a:[3,14],m:40,d:'Гора с канатами и зацепами, спуск по горке.',on:1},
+ {k:'net',n:'Красочные сети',a:[4,12],m:30,d:'Верёвочные переходы и этажи, «паутина» для детей.'},
+ {k:'hive',n:'Вязаные ульи',a:[2,6],m:30,d:'Мягкие сети для самых маленьких, сочетаются с лабиринтом.'},
+ {k:'troll',n:'Троллей',a:[6,16],m:40,d:'Горизонтальная тарзанка, длина от 10 м, ширина зоны 4 м.'},
+ {k:'tramp',n:'Батутная арена',a:[4,16],m:150,d:'Популярная зона для всех возрастов. Потолки от 5 м.',h:5},
+ {k:'climb',n:'Скалодром',a:[6,16],m:0,d:'Автострахование, минимум персонала.'}
+];
+var zw=$('#zones');
+Z.forEach(function(z,i){
+  z.v=z.m; var b=D.createElement('div'); b.className='zone'+(z.on?' on':''); b.setAttribute('data-r',''); b.style.transitionDelay=(i%2*0.05)+'s'; b.tabIndex=0; b.setAttribute('role','checkbox'); b.setAttribute('aria-checked',z.on?'true':'false');
+  b.innerHTML='<div class="zi"><svg viewBox="0 0 24 24">'+IC[z.k]+'</svg></div><div><h4>'+z.n+'<span class="chk"></span></h4><div class="meta">'+(z.a[0]<=4&&z.a[1]>=16?'все возрасты':'от '+z.a[0]+' лет')+' · '+(z.m?'от '+z.m+' м²':'<span class="gap">мин. площадь</span>')+'</div><div class="desc">'+z.d+'</div>'+(z.m?'<div class="step"><button type="button" data-d="-1" aria-label="Меньше">−</button><span>'+z.v+' м²</span><button type="button" data-d="1" aria-label="Больше">+</button></div>':'')+'</div>';
+  b.addEventListener('click',function(e){
+    var d=e.target.closest('[data-d]');
+    if(d){e.stopPropagation(); z.v=Math.max(z.m,z.v+(+d.dataset.d)*(z.m>=100?25:10)); $('.step span',b).textContent=z.v+' м²'; calcZ(); return}
+    z.on=!z.on; b.classList.toggle('on',!!z.on); b.setAttribute('aria-checked',z.on?'true':'false'); calcZ();
+  });
+  b.addEventListener('keydown',function(e){if(e.key===' '||e.key==='Enter'){e.preventDefault();b.click()}});
+  zw.appendChild(b);
+});
+var shown=0;
+function tween(el,to,suf){
+  if(RM){el.textContent=nf(to)+(suf||'');return}
+  var from=el._v||0,t0=null; el._v=to;
+  (function st(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/450),e=1-Math.pow(1-p,3);el.textContent=nf(from+(to-from)*e)+(suf||'');if(p<1)requestAnimationFrame(st)})(performance.now());
+}
+function calcZ(){
+  var on=Z.filter(function(z){return z.on}), tot=on.reduce(function(s,z){return s+(z.m?z.v:0)},0);
+  tween($('#zTotal'),tot); $('#zCount').textContent=on.length;
+  var h=on.some(function(z){return z.h})?'от 5 м':'от 4,5 м'; $('#zH').textContent=h;
+  var lo=Math.min.apply(null,on.map(function(z){return z.a[0]}).concat(on.length?[]:[0])), hi=Math.max.apply(null,on.map(function(z){return z.a[1]}).concat(on.length?[]:[0]));
+  var f=$('#zAge'); if(on.length){f.style.left=(lo/16*100)+'%';f.style.width=((hi-lo)/16*100)+'%';$('#zFit').textContent='детей '+lo+'–'+(hi>=16?'16+':hi)+' лет'}else{f.style.width='0';$('#zFit').textContent='—'}
+  var pk=$('#picked'); if(on.length){pk.classList.add('on');pk.textContent='Подборка из конструктора: '+on.map(function(z){return z.n+(z.m?' '+z.v+' м²':'')}).join(', ')+'. Игровая площадь '+tot+' м².'}else pk.classList.remove('on');
+}
+calcZ();
+
+/* calculator */
+var ids=['c1','c2','c3','c4','c5','c6','c7','c8'];
+function val(i){return +($('#'+i).value.replace(/\D/g,''))||0}
+ids.forEach(function(i){var el=$('#'+i); el.addEventListener('input',function(){var v=el.value.replace(/\D/g,'').slice(0,10);el.value=v?(+v).toLocaleString('ru-RU'):'';calcC()})});
+function calcC(){
+  var wd=val('c1'),we=val('c2'),ch=val('c3'),ar=val('c4'),rent=val('c5'),st=val('c6'),oth=val('c7'),inv=val('c8');
+  var rev=(wd*22+we*8)*ch, exp=rent*ar+st+oth, pr=rev-exp;
+  var any=rev||exp;
+  $('#r1').textContent=rev?nf(rev)+' ₽':'—'; $('#r2').textContent=exp?nf(exp)+' ₽':'—'; $('#r3').textContent=any?nf(pr)+' ₽':'—';
+  var r4=$('#r4'), hint=$('#cHint');
+  if(inv&&pr>0){var m=inv/pr; r4.innerHTML=(m<10?m.toFixed(1).replace('.',','):Math.round(m))+' <small>мес.</small>'; hint.textContent='Это расчёт на ваших допущениях. Мы проверим их по аудитории и конкурентам вашего города.'}
+  else if(any&&pr<=0){r4.innerHTML='<small>расходы выше выручки</small>'; hint.textContent='Проверьте допущения: при таких цифрах парк не выходит в плюс. Расчёт под ваш город поможет найти верный формат.'}
+  else{r4.textContent='—'}
+}
+
+/* cases */
+var CASES=[
+ {t:'«Комета»',c:'Орск',y:'2026',a:600,d:55,im:'c-kometa.jpg',tag:'Семейный центр',p:'Батуты с интерактивом, скалодром, лабиринт. 3D-проект сделали до первой встречи.',u:'detskie-razvlekatelnye-centry/detskij-razvlekatelnyj-centr-kometa'},
+ {t:'Positive Energy',c:'Омск',y:'2024',a:600,d:40,mt:16,im:'c-positive.jpg',tag:'Есть видеоотзыв владельца',p:'Лабиринт с каскадной горкой, сухой бассейн, интерактивная мишень и арена.',u:'detskie-razvlekatelnye-centry/positive-energy'},
+ {t:'«Орбита Семьи»',c:'Севастополь',y:'2023',a:650,d:55,mt:18,im:'p-orbita-4.jpg',tag:'Крупнейший в городе',p:'Интерактивная арена, спиннер, волейбол и баскетбол. Производство в сжатый срок.',u:'detskie-razvlekatelnye-centry/razvlekatelnyj-centr-orbita-semi'},
+ {t:'«Неополис»',c:'Чита',y:'2026',a:500,d:55,im:'c-neopolis.jpg',tag:'Небольшой город',p:'Колонны и перепады высот стали частью игры. Маршрут гостя распределяет поток.',u:'detskie-razvlekatelnye-centry/detskij-razvlekatelnyj-centr-neopolis'},
+ {t:'«Пружина»',c:'Губкинский',y:'2023',a:400,d:55,im:'c-gub.jpg',tag:'Шеф-монтаж',p:'Сухой бассейн, горки, скалодром, батутная арена. Монтаж заказчик выполнил сам по нашим схемам.',u:'detskie-razvlekatelnye-centry/aktiviti-park-pruzhina'},
+ {t:'«Пружина»',c:'Ноябрьск',y:'2024',a:300,d:55,mt:10,im:'c-noy.jpg',tag:'Поддержка города',p:'Самый высокий лабиринт в округе. Заказчик получил поддержку округа и города.',u:'detskie-razvlekatelnye-centry/detskij-razvlekatelnyj-park-pruzhina'}
+];
+var cg=$('#caseGrid');
+CASES.forEach(function(c,i){
+  var a=D.createElement('a'); a.className='case'; a.href='https://unitramp.ru/'+c.u; a.target='_blank'; a.rel='noopener'; a.setAttribute('data-r',''); a.style.transitionDelay=(i%3*0.06)+'s';
+  a.innerHTML='<div class="im"><img src="assets/img/'+c.im+'" alt="'+c.t+', '+c.c+'" loading="lazy"><span class="chip">'+c.tag+'</span></div><div class="bd"><h3>'+c.t+'</h3><div class="where">'+c.c+', '+c.y+'</div><div class="nums"><span><b>'+c.a+' м²</b>площадь</span><span><b>'+c.d+'</b>рабочих дней</span>'+(c.mt?'<span><b>'+c.mt+' дн.</b>монтаж</span>':'')+'</div><p>'+c.p+'</p><span class="go">Страница проекта <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M3 9h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.8"/></svg></span></div>';
+  cg.appendChild(a);
+});
+
+/* reveal + counters */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px',threshold:.08});
+$$('[data-r]').forEach(function(el){io.observe(el)});
+addEventListener('load',function(){D.body.classList.add('loaded')}); setTimeout(function(){D.body.classList.add('loaded')},800);
+setTimeout(function(){$$('[data-count]').forEach(function(el){var to=+el.dataset.count; el._v=0; tween(el,to)})},900);
+
+/* header, progress */
+var hdr=$('#hdr'),prog=$('#progress'),tk=0;
+function onS(){var y=scrollY,H=D.documentElement.scrollHeight-innerHeight;prog.style.transform='scaleX('+(H>0?y/H:0)+')';hdr.classList.toggle('sh',y>10);D.body.classList.toggle('at-top',y<innerHeight*.6);tk=0}
+addEventListener('scroll',function(){if(!tk){tk=1;requestAnimationFrame(onS)}},{passive:true}); onS();
+
+/* menu */
+function tm(o){D.body.classList.toggle('menu-open',o);$('#burger').setAttribute('aria-expanded',o?'true':'false')}
+$('#burger').addEventListener('click',function(){tm(!D.body.classList.contains('menu-open'))});
+$$('#mmenu a').forEach(function(a){a.addEventListener('click',function(){tm(false)})});
+D.addEventListener('keydown',function(e){if(e.key==='Escape')tm(false)});
+
+/* faq smooth */
+$$('.qa').forEach(function(d){var s=$('summary',d),a=$('.a',d);s.addEventListener('click',function(e){if(RM)return;e.preventDefault();
+  if(d.open){a.style.height=a.scrollHeight+'px';requestAnimationFrame(function(){a.style.transition='height .35s';a.style.height='0px'});setTimeout(function(){d.open=false;a.style.cssText=''},350)}
+  else{d.open=true;var h=a.scrollHeight;a.style.height='0px';requestAnimationFrame(function(){a.style.transition='height .4s';a.style.height=h+'px'});setTimeout(function(){a.style.cssText=''},420)}})});
+
+/* form */
+var tel=$('#f-tel');
+tel.addEventListener('input',function(){var d=tel.value.replace(/\D/g,'');if(d[0]==='8')d='7'+d.slice(1);if(d&&d[0]!=='7')d='7'+d;d=d.slice(0,11);var r='+7';if(d.length>1)r+=' ('+d.slice(1,4);if(d.length>=4)r+=')';if(d.length>4)r+=' '+d.slice(4,7);if(d.length>7)r+='-'+d.slice(7,9);if(d.length>9)r+='-'+d.slice(9,11);tel.value=d.length?r:''});
+$('#f-area').addEventListener('input',function(e){e.target.value=e.target.value.replace(/\D/g,'').slice(0,5)});
+$('#lf').addEventListener('submit',function(e){e.preventDefault();this.classList.add('done')});
+$('#again').addEventListener('click',function(){$('#lf').classList.remove('done')});
+
+/* gaps */
+$('#gapsN').textContent=$$('.gap').length;
+$('#gapsToggle').addEventListener('click',function(){D.body.classList.toggle('clean')});
+})();
+</script>
+</body>
+</html>
