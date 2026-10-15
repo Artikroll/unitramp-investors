@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#145AF5">
 <link rel="icon" href="assets/img/logo.svg">
 <style>
+html{overflow-x:clip}
 @font-face{font-family:"Manrope";src:url(assets/fonts/Manrope-700.ttf) format("truetype");font-weight:700;font-display:swap}
 @font-face{font-family:"Manrope";src:url(assets/fonts/Manrope-800.ttf) format("truetype");font-weight:800;font-display:swap}
 @font-face{font-family:"Golos";src:url(assets/fonts/GolosText-400.ttf) format("truetype");font-weight:400;font-display:swap}
@@ -520,7 +521,7 @@ form.done .sent{opacity:1;pointer-events:auto}
       <aside class="sum" data-r>
         <div class="lbl">Игровая площадь</div>
         <div class="big"><span id="zTotal">0</span> <small>м²</small></div>
-        <div class="small" style="color:var(--on-navy-2)">без учёта входной группы, гардероба и зоны родителей <span class="gap">доля инфраструктуры в площади парка</span></div>
+        <div class="small" style="color:var(--on-navy-2)">без учёта входной группы, гардероба и зоны родителей</div>
         <div class="ages"><div class="lbl">Возраст гостей</div><div class="bar"><div class="fill" id="zAge"></div></div><div class="ticks"><span>0</span><span>4</span><span>8</span><span>12</span><span>16+</span></div></div>
         <div class="row"><span>Выбрано зон</span><b id="zCount">0</b></div>
         <div class="row"><span>Высота потолков</span><b id="zH">от 4,5 м</b></div>
@@ -537,7 +538,7 @@ form.done .sent{opacity:1;pointer-events:auto}
   <div class="wrap">
     <div class="head">
       <div class="l"><span class="chip" data-r>Бюджет</span><h2 data-r>Из чего складываются <span style="white-space:nowrap">10–20 млн</span></h2></div>
-      <p class="lead" data-r>Честно разделяем, что входит в нашу смету, а что вы считаете отдельно. Так в бизнес-плане не появится дыр. <span class="gap">доли статей в бюджете</span></p>
+      <p class="lead" data-r>Честно разделяем, что входит в нашу смету, а что вы считаете отдельно. Так в бизнес-плане не появится дыр.</p>
     </div>
     <div class="bud-bar" data-r data-bud>
       <div style="--w:1;background:#5B8BFF">Проект и 3D<small>планировка, зонирование, визуализация</small></div>
@@ -547,7 +548,7 @@ form.done .sent{opacity:1;pointer-events:auto}
     </div>
     <div class="bud-cols">
       <div class="bud-col" data-r><h3>Входит в нашу смету</h3><ul><li>Подбор формата и 3D-проект под помещение</li><li>Оборудование с сертификатами и паспортами</li><li>Доставка и монтаж своей бригадой</li><li>Документы для запуска, обучение персонала</li><li>Гарантия 12 месяцев</li></ul></div>
-      <div class="bud-col no" data-r style="transition-delay:.06s"><h3>Считаете отдельно</h3><ul><li>Аренда помещения</li><li>Ремонт и отделка, если помещение не готово</li><li>Персонал и его зарплата</li><li>Маркетинг к открытию</li><li>Касса, учёт, вывеска <span class="gap ok">состав статей</span></li></ul></div>
+      <div class="bud-col no" data-r style="transition-delay:.06s"><h3>Считаете отдельно</h3><ul><li>Аренда помещения</li><li>Ремонт и отделка, если помещение не готово</li><li>Персонал и его зарплата</li><li>Маркетинг к открытию</li><li>Касса, учёт, вывеска</li></ul></div>
       <div class="bud-col save" data-r style="transition-delay:.12s"><h3>Как сэкономить</h3><p><b>Шеф-монтаж.</b> Монтируете своими силами по сборочным видео и схемам, мы консультируем. Так сделал владелец «Пружины» в Губкинском и заметно сэкономил на монтаже.</p><p class="small" style="color:var(--ink)">Подходит, если у вас есть своя команда для сборки.</p></div>
     </div>
   </div>
@@ -635,7 +636,7 @@ form.done .sent{opacity:1;pointer-events:auto}
     <div class="m-grid">
       <div class="m-photo" data-r><img src="assets/img/hero.jpg" alt="Инструктор с детьми на полосе препятствий" loading="lazy"><span>«Орбита Семьи», Севастополь</span></div>
       <div class="m-card" data-r style="transition-delay:.06s"><div class="n">Путь 1</div><h3>Управляете сами</h3><p>Семейный бизнес, в котором вы сами отвечаете за гостей и команду.</p><ul><li>Обучаем персонал при запуске</li><li>Передаём документы и инструкции по эксплуатации</li><li>Остаёмся на связи после открытия</li></ul></div>
-      <div class="m-card b" data-r style="transition-delay:.12s"><div class="n">Путь 2</div><h3>Нанимаете управляющего</h3><p>Вы вкладываете деньги, а парком руководит опытный управляющий.</p><ul><li>Помогаем найти управляющего с опытом в индустрии <span class="gap ok">делаем ли это системно</span></li><li>Вы видите, кто будет вести ваш парк, до старта</li></ul></div>
+      <div class="m-card b" data-r style="transition-delay:.12s"><div class="n">Путь 2</div><h3>Нанимаете управляющего</h3><p>Вы вкладываете деньги, а парком руководит опытный управляющий.</p><ul><li>Помогаем найти управляющего с опытом в индустрии</li><li>Вы видите, кто будет вести ваш парк, до старта</li></ul></div>
     </div>
   </div>
 </section>
@@ -684,11 +685,10 @@ form.done .sent{opacity:1;pointer-events:auto}
     <div class="faq-l"><span class="chip" data-r>Вопросы</span><h2 data-r>Что спрашивают инвесторы</h2><p class="lead" data-r>Не нашли ответ? Напишите в WhatsApp, ответит менеджер проекта.</p></div>
     <div data-r>
       <details class="qa"><summary>Через сколько окупится парк?<i class="pm"></i></summary><div class="a"><p>Зависит от города, площади, чека и аренды. Прикиньте в калькуляторе выше, а точный расчёт под ваше помещение сделаем с учётом конкурентов и аудитории. <span class="gap">типичный срок окупаемости по нашим паркам</span></p></div></details>
-      <details class="qa"><summary>Это франшиза?<i class="pm"></i></summary><div class="a"><p>Нет, франшизу мы не продаём. Парк работает под вашим названием, без паушального взноса и роялти. Мы проектируем, производим и запускаем. <span class="gap ok">формулировка про франшизу</span></p></div></details>
+      <details class="qa"><summary>Это франшиза?<i class="pm"></i></summary><div class="a"><p>Нет, франшизу мы не продаём. Парк работает под вашим названием, без паушального взноса и роялти. Мы проектируем, производим и запускаем.</p></div></details>
       <details class="qa"><summary>Что, если в городе уже есть парки?<i class="pm"></i></summary><div class="a"><p>До проекта смотрим, какие парки уже работают в городе, и подбираем формат, которого там нет. Например, ниндзя-зону, если в городе её ещё никто не поставил.</p></div></details>
       <details class="qa"><summary>Можно начать без помещения?<i class="pm"></i></summary><div class="a"><p>Да. Пришлём чек-лист, поможем оценить варианты площадок и выполним контрольный замер выбранного помещения.</p></div></details>
       <details class="qa"><summary>Сколько длится проект?<i class="pm"></i></summary><div class="a"><p>От договора до открытия обычно 40–55 рабочих дней. Монтаж на объекте от 10 до 21 дня.</p></div></details>
-      <details class="qa"><summary>Есть рассрочка или лизинг?<i class="pm"></i></summary><div class="a"><p><span class="gap">условия рассрочки и лизинга</span></p></div></details>
       <details class="qa"><summary>Какая гарантия и документы?<i class="pm"></i></summary><div class="a"><p>Гарантия 12 месяцев. Оборудование соответствует ТР ЕАЭС 038 и ГОСТ 33807, к изделиям прилагаются паспорта и инструкции.</p></div></details>
     </div>
   </div>
@@ -775,7 +775,7 @@ var Z=[
 var zw=$('#zones');
 Z.forEach(function(z,i){
   z.v=z.m; var b=D.createElement('div'); b.className='zone'+(z.on?' on':''); b.setAttribute('data-r',''); b.style.transitionDelay=(i%2*0.05)+'s'; b.tabIndex=0; b.setAttribute('role','checkbox'); b.setAttribute('aria-checked',z.on?'true':'false');
-  b.innerHTML='<div class="zi"><svg viewBox="0 0 24 24">'+IC[z.k]+'</svg></div><div><h4>'+z.n+'<span class="chk"></span></h4><div class="meta">'+(z.a[0]<=4&&z.a[1]>=16?'все возрасты':'от '+z.a[0]+' лет')+' · '+(z.m?'от '+z.m+' м²':'<span class="gap">мин. площадь</span>')+'</div><div class="desc">'+z.d+'</div>'+(z.m?'<div class="step"><button type="button" data-d="-1" aria-label="Меньше">−</button><span>'+z.v+' м²</span><button type="button" data-d="1" aria-label="Больше">+</button></div>':'')+'</div>';
+  b.innerHTML='<div class="zi"><svg viewBox="0 0 24 24">'+IC[z.k]+'</svg></div><div><h4>'+z.n+'<span class="chk"></span></h4><div class="meta">'+(z.a[0]<=4&&z.a[1]>=16?'все возрасты':'от '+z.a[0]+' лет')+' · '+(z.m?'от '+z.m+' м²':'')+'</div><div class="desc">'+z.d+'</div>'+(z.m?'<div class="step"><button type="button" data-d="-1" aria-label="Меньше">−</button><span>'+z.v+' м²</span><button type="button" data-d="1" aria-label="Больше">+</button></div>':'')+'</div>';
   b.addEventListener('click',function(e){
     var d=e.target.closest('[data-d]');
     if(d){e.stopPropagation(); z.v=Math.max(z.m,z.v+(+d.dataset.d)*(z.m>=100?25:10)); $('.step span',b).textContent=z.v+' м²'; calcZ(); return}
